@@ -1,0 +1,10 @@
+C:\Users\Aldo Herrera\Desktop\Taller\TP7\tp-nro7-Leonel-H29\Administracion_Personal\Administracion_Personal\bin\Debug\Administracion_Personal.exe
+C:\Users\Aldo Herrera\Desktop\Taller\TP7\tp-nro7-Leonel-H29\Administracion_Personal\Administracion_Personal\bin\Debug\Administracion_Personal.pdb
+C:\Users\Aldo Herrera\Desktop\Taller\TP7\tp-nro7-Leonel-H29\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.csprojResolveAssemblyReference.cache
+C:\Users\Aldo Herrera\Desktop\Taller\TP7\tp-nro7-Leonel-H29\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.exe
+C:\Users\Aldo Herrera\Desktop\Taller\TP7\tp-nro7-Leonel-H29\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.pdb
+C:\Users\Aldo Herrera\Desktop\Taller\TP8\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.exe
+C:\Users\Aldo Herrera\Desktop\Taller\TP8\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.pdb
+C:\Users\Aldo Herrera\Desktop\Taller\TP8\Administracion_Personal\Administracion_Personal\obj\x86\Debug\Administracion_Personal.csprojResolveAssemblyReference.cache
+C:\Users\Aldo Herrera\Desktop\Taller\TP8\Administracion_Personal\Administracion_Personal\bin\Debug\Administracion_Personal.exe
+C:\Users\Aldo Herrera\Desktop\Taller\TP8\Administracion_Personal\Administracion_Personal\bin\Debug\Administracion_Personal.pdb
