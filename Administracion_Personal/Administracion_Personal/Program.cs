@@ -4,11 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Administracion_Personal;
+using System.IO;
 
 namespace Admimistracion_Personal
 {
     class Program
     {
+        enum Nombres_Hombres { Javier, Luis, Ramon, Carlos, Pablo, Santiago, Ricardo, Alejandro, Nahuel, Agustin };
+        enum Nombres_Mujeres { Maria, Carolina, Rocio, Celeste, Patricia, Lourdes, Mirtha, Micaela, Antonela, Carmen };
+        enum Apelllidos { Sosa, Luna, Diaz, Herrera, Martinez, Jerez, Nieva, Cardozo, Brito, Villa };
+        enum Genero { Masculino, Femenino };
+        enum Estado_Civil { Casado, Soltero, Casada, Soltera };
+
         static void Main(string[] args){
             List<Empleados> Personas = new List<Empleados>();
             
@@ -29,13 +36,7 @@ namespace Admimistracion_Personal
 
              Console.ReadKey();
         }
-        enum Nombres_Hombres { Javier, Luis, Ramon, Carlos, Pablo, Santiago, Ricardo, Alejandro, Nahuel, Agustin };
-        enum Nombres_Mujeres { Maria, Carolina, Rocio, Celeste, Patricia, Lourdes, Mirtha, Micaela, Antonela, Carmen };
-        enum Apelllidos { Sosa, Luna, Diaz, Herrera, Martinez, Jerez, Nieva, Cardozo, Brito, Villa};
-        enum Genero{Masculino, Femenino};
-        enum Estado_Civil { Casado, Soltero, Casada, Soltera };
-
-
+       
         //------------------------------AGREGAR EMPLEADOS
         static Empleados Agregar_Emp(){
             Empleados dat_emp = new Empleados();
@@ -71,12 +72,12 @@ namespace Admimistracion_Personal
             dat_emp.Apellido = Convert.ToString(Ape);
 
             //Fecha de Nacimiento
-            DateTime fecha_nac = new DateTime(aleatorio.Next(1955, 2002), aleatorio.Next(1, 12), aleatorio.Next(1, 29));
+            DateTime fecha_nac = new DateTime(aleatorio.Next(1955, 2000), aleatorio.Next(1, 12), aleatorio.Next(1, 29));
             dat_emp.Fecha_Nac = fecha_nac;
 
             //Fecha de ingreso
             DateTime fecha_ing = new DateTime(aleatorio.Next(1980, 2019), aleatorio.Next(1, 12), aleatorio.Next(1, 29));
-            while (fecha_nac > fecha_ing)
+            while ((dat_emp.Diferencia()) < 20)
             {
                 fecha_ing = new DateTime(aleatorio.Next(1980, 2019), aleatorio.Next(1, 12), aleatorio.Next(1, 29));
             }
@@ -106,6 +107,7 @@ namespace Admimistracion_Personal
             Empleados dat_emp = new Empleados();
             dat_emp = Agregar_Emp();
             dat_emp.Mostrar();
+            Escribir_archivo(dat_emp);
             Personas.Add(dat_emp);
         }
 
@@ -117,8 +119,7 @@ namespace Admimistracion_Personal
             string nom_bus = Convert.ToString(Console.ReadLine());
             String[] partes_nom = nom_bus.Split(' ');
             //Me fijo que el empleado exista
-            while (!Personas.Exists(x => x.nombre == partes_nom[0] || !Personas.Exists(y => y.apellido == partes_nom[1])))
-            {
+            while (Personas.Exists(x => x.nombre == partes_nom[0])==false || Personas.Exists(x => x.apellido == partes_nom[1])==false){
                 Console.WriteLine("--No exite el empleado\nIngrese otro nombre\n--Escriba el nombre completo: ");
                 nom_bus = Convert.ToString(Console.ReadLine());
                 partes_nom = nom_bus.Split(' ');
@@ -133,13 +134,31 @@ namespace Admimistracion_Personal
             string nom_elim = Convert.ToString(Console.ReadLine());
             String[] partes_nom = nom_elim.Split(' ');
             //Me fijo que el empleado exista
-            while (!Personas.Exists(x => x.nombre == partes_nom[0]) || !Personas.Exists(y => y.apellido == partes_nom[1])){
+            while (Personas.Exists(x => x.nombre == partes_nom[0])==false || Personas.Exists(x => x.apellido == partes_nom[1])==false){
                 Console.WriteLine("--No exite el empleado\nIngrese otro nombre\n--Escriba el nombre completo: ");
                 nom_elim = Convert.ToString(Console.ReadLine());
                 partes_nom = nom_elim.Split(' ');
             }
             Personas.Remove(Personas.Where(x => x.nombre == partes_nom[0]).FirstOrDefault()); //Elimino el empleado
         }
+
+        static void Escribir_archivo(Empleados dat_emp)
+        {
+
+            string ruta_archi = AppDomain.CurrentDomain.BaseDirectory + "Empleados.csv";
+            StreamWriter writer = new StreamWriter(ruta_archi, false);
+            string contenido = null;
+
+            contenido = String.Format("Nombre: {0}, Apellido: {1},Fecha de Nacimiento: {2}, Estado Civil: {3}, Genero: {4}, Fecha de Ingreso: {5}, Cargo: {6}, Sueldo Base: ${7}", dat_emp.nombre, dat_emp.apellido, dat_emp.F_Nac, dat_emp.Est_Civil, dat_emp.Genero, dat_emp.F_Ingreso, dat_emp.cargo, dat_emp.sueldo_Base);
+
+            /*for (int i = 0; i < 5; i++) {
+                contenido = String.Format("Nombre: {0}, Apellido: {1},Fecha de Nacimiento: {2}, Estado Civil: {3}, Genero: {4}, Fecha de Ingreso: {5}, Cargo: {6}, Sueldo Base: ${7}", Personas.nombre, this.apellido, this.F_Nac, this.Est_Civil, this.Genero, this.F_Ingreso, this.cargo, this.sueldo_Base);
+            }*/
+            writer.Close();
+        }
+
+        
+
 
         //Menu
         static void Menu(List<Empleados> Personas, string F_Act)

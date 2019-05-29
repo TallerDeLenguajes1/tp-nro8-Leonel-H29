@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Administracion_Personal
 {
@@ -87,12 +88,18 @@ namespace Administracion_Personal
             DateTime fecha = new DateTime((DateTime.Today - F_Nac).Ticks);
             return fecha.Year - 1;
         }
+
+        public int Diferencia() {
+            DateTime fecha = new DateTime((F_Nac - F_Ingreso).Ticks);
+            return fecha.Year - 1;
+        }
+
         public void Jubilacion()
         {
             int edad = Edad();
             int edad_jub=0;
             //Devuelve la cantidad de años restantes para la jubilación del empleado
-            if (Genero.Contains("Hombre") == true) edad_jub = 65;
+            if (Genero.Contains("Masculino") == true) edad_jub = 65;
             else edad_jub = 60;
 
             if (edad_jub < edad) {
@@ -114,7 +121,7 @@ namespace Administracion_Personal
             else cant_hijos = aleatorio.Next(0, 1);
 
 
-            Console.WriteLine("--Cantidad de hijos de {0} {1}: {2}", this.nombre, this.apellido, cant_hijos);
+            //Console.WriteLine("--Cantidad de hijos de {0} {1}: {2}", this.nombre, this.apellido, cant_hijos);
 
             if (ant < 20)
             {
@@ -139,6 +146,15 @@ namespace Administracion_Personal
             salario = sueldo_Base + adicional;
 
             return salario;
+        }
+
+        //Resultado de la busqueda
+        public override String ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            Console.WriteLine("----Resultados");
+            sb.AppendFormat("Nombre: {0}, Apellido: {1},Fecha de Nacimiento: {2}, Estado Civil: {3}, Genero: {4}, Fecha de Ingreso: {5}, Cargo: {6}, Sueldo Base: ${7}", this.nombre, this.apellido, this.F_Nac, this.Est_Civil, this.Genero, this.F_Ingreso, this.cargo, this.sueldo_Base);
+            return (sb.ToString());
         }
     }
     enum Trabajo { Auxiliar, Administrativo, Ingeniero, Especialista, Investigador };
