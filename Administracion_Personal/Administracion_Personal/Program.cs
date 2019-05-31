@@ -107,7 +107,8 @@ namespace Admimistracion_Personal
             Empleados dat_emp = new Empleados();
             dat_emp = Agregar_Emp();
             dat_emp.Mostrar();
-            Escribir_archivo(dat_emp);
+            Escribir_archivoCSV(dat_emp);
+            BackUp(dat_emp);
             Personas.Add(dat_emp);
         }
 
@@ -142,22 +143,56 @@ namespace Admimistracion_Personal
             Personas.Remove(Personas.Where(x => x.nombre == partes_nom[0]).FirstOrDefault()); //Elimino el empleado
         }
 
-        static void Escribir_archivo(Empleados dat_emp)
+
+        //Escribo en el archivo
+        static void Escribir_archivoCSV(Empleados dat_emp)
         {
-
             string ruta_archi = AppDomain.CurrentDomain.BaseDirectory + "Empleados.csv";
-            StreamWriter writer = new StreamWriter(ruta_archi, false);
-            string contenido = null;
+            StreamWriter writer = new StreamWriter(ruta_archi, true);
 
-            contenido = String.Format("Nombre: {0}, Apellido: {1},Fecha de Nacimiento: {2}, Estado Civil: {3}, Genero: {4}, Fecha de Ingreso: {5}, Cargo: {6}, Sueldo Base: ${7}", dat_emp.nombre, dat_emp.apellido, dat_emp.F_Nac, dat_emp.Est_Civil, dat_emp.Genero, dat_emp.F_Ingreso, dat_emp.cargo, dat_emp.sueldo_Base);
-
-            /*for (int i = 0; i < 5; i++) {
-                contenido = String.Format("Nombre: {0}, Apellido: {1},Fecha de Nacimiento: {2}, Estado Civil: {3}, Genero: {4}, Fecha de Ingreso: {5}, Cargo: {6}, Sueldo Base: ${7}", Personas.nombre, this.apellido, this.F_Nac, this.Est_Civil, this.Genero, this.F_Ingreso, this.cargo, this.sueldo_Base);
-            }*/
-            writer.Close();
+            using(writer){
+                string contenido = String.Format("Nombre: {0},Apellido: {1},Fecha de Nacimiento: {2},Estado Civil: {3},Genero: {4},Fecha de Ingreso: {5},Cargo: {6},Sueldo Base: ${7}", dat_emp.nombre, dat_emp.apellido, dat_emp.F_Nac, dat_emp.Est_Civil, dat_emp.Genero, dat_emp.F_Ingreso, dat_emp.cargo, dat_emp.sueldo_Base);
+                //string[] cont_cel = contenido.Split(',');
+                writer.WriteLine(contenido);
+                writer.Close();
+            }
         }
 
-        
+        static void BackUp(Empleados dat_emp)
+        {
+            // lista de directorios (carpetas que tiene el disco c:\\
+            List<string> lista = Directory.GetDirectories("c:\\").ToList();
+            string ruta_archi = @"c:\BackUpAgenda\Prueba.bk";
+            //StreamWriter writer = new StreamWriter(ruta_archi);
+
+
+            foreach (string carpetas in lista)
+            {
+                Console.WriteLine(carpetas);
+            }
+            string BuscandoCarpeta = @"c:\BackUpAgenda";
+            if (!Directory.Exists(BuscandoCarpeta)) Directory.CreateDirectory(BuscandoCarpeta);
+
+            File.Create(ruta_archi); // Crea un archivo Prueba .bk
+
+            if (File.Exists(@"c:\BackUpAgenda\Prueba.bk")) // Crea un Comprueba si existe el archivo
+            {
+                /*using (writer)
+                {
+                    writer.WriteLine(dat_emp);
+                    writer.Close();
+                }*/
+                File.Copy(@"c:\BackUpAgenda\Prueba.bk", @"c:\BackUpAgenda\Prueba_2.bk");
+            }
+            else {
+                Console.WriteLine("No se ha encontrado el archivo Prueba.bk");
+            }
+
+            
+
+            //Console.WriteLine();
+            Console.ReadKey();
+        }
 
 
         //Menu
